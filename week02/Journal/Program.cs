@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 class Program
 {
@@ -33,19 +31,19 @@ class Program
                     break;
 
                 case "2":
-                    journal.displayall();
+                    journal.DisplayJournal();
                     break;
 
                 case "3":
                     Console.Write("Enter filename to save: ");
                     string saveFile = Console.ReadLine();
-                    journal.savetofile(saveFile);
+                    journal.SaveToFile(saveFile);
                     break;
 
                 case "4":
                     Console.Write("Enter filename to load: ");
                     string loadFile = Console.ReadLine();
-                    journal.loadfromfile(loadFile);
+                    journal.LoadFromFile(loadFile);
                     break;
 
                 case "5":
@@ -53,54 +51,8 @@ class Program
                     break;
 
                 default:
-            }
-        }
-        
-        public class Journal 
-        {
-            private List<Entry> entries = new List<Entry>();
-        
-            public void AddEntry(Entry entry)
-            {
-                entries.Add(entry);
-            }
-        
-            public void Display()
-            {
-                foreach (var entry in entries)
-                {
-                    Console.WriteLine($"{entry.Date} - {entry.Prompt}");
-                    Console.WriteLine(entry.Response);
-                    Console.WriteLine();
-                }
-            }
-        
-            public void SaveToFile(string fileName)
-            {
-                using (var writer = new StreamWriter(fileName))
-                {
-                    foreach (var entry in entries)
-                    {
-                        writer.WriteLine($"{entry.Date}|{entry.Prompt}|{entry.Response}");
-                    }
-                }
-            }
-        
-            public void LoadFromFile(string fileName)
-            {
-                if (File.Exists(fileName))
-                {
-                    entries.Clear();
-                    string[] lines = File.ReadAllLines(fileName);
-                    foreach (string line in lines)
-                    {
-                        string[] parts = line.Split('|');
-                        if (parts.Length == 3)
-                        {
-                            entries.Add(new Entry(parts[0], parts[1], parts[2]));
-                        }
-                    }
-                }
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
             }
         }
     }

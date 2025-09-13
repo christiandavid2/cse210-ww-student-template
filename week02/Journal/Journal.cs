@@ -1,34 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
 public class Journal
 {
-    public List<Entry> _entries = new List<Entry>();
+    private List<Entry> _entries = new List<Entry>();
 
-    public void AddEntry(Entry Entry)
+    public void AddEntry(Entry entry)
     {
-        _entries.Add(Entry);
+        _entries.Add(entry);
     }
-    public void displayall()
+
+    public void DisplayJournal()
     {
         if (_entries.Count == 0)
         {
-            Console.WriteLine("No Journal entries yet");
+            Console.WriteLine("No journal entries yet.");
             return;
         }
+
         foreach (Entry entry in _entries)
         {
             entry.Display();
         }
     }
-    public void savetofile( string filename)
+
+    public void SaveToFile(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
-            foreach(Entry entry in _entries) 
+            foreach (Entry entry in _entries)
             {
                 writer.WriteLine(entry.ToFileFormat());
             }
         }
+        Console.WriteLine("Journal saved successfully.");
     }
-    public void loadfromfile(string filename)
+
+    public void LoadFromFile(string filename)
     {
         if (File.Exists(filename))
         {
@@ -36,13 +45,13 @@ public class Journal
             string[] lines = File.ReadAllLines(filename);
             foreach (string line in lines)
             {
-                _entries.Add(new Entry(line));
+                _entries.Add(Entry.FromFileFormat(line));
             }
-            Console.WriteLine("Journal loaded successfully");
+            Console.WriteLine("Journal loaded successfully.");
         }
         else
         {
-            Console.WriteLine("File not found");
+            Console.WriteLine("File not found.");
         }
     }
 }

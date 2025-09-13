@@ -31,4 +31,4 @@ public class Entry
         string[] parts = line.Split('|');
         return new Entry(parts[0], parts[1], parts[2]);
     }
-}    
+}
